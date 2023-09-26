@@ -1,0 +1,72 @@
+<?php
+$show_related = wilmer_mikado_options()->getOptionValue('blog_single_related_posts') == 'yes' ? true : false;
+$related_post_number = wilmer_mikado_sidebar_layout() === 'no-sidebar' ? 3 : 3;
+$related_posts_options = array(
+    'posts_per_page' => $related_post_number
+);
+$related_posts = wilmer_mikado_get_blog_related_post_type(get_the_ID(), $related_posts_options);
+$related_posts_image_size = isset($related_posts_image_size) ? $related_posts_image_size : 'full';
+?>
+<?php if($show_related) {  ?>
+    <div class="mkdf-related-posts-holder clearfix">
+        <div class="mkdf-related-posts-holder-inner">
+            <?php if ( $related_posts && $related_posts->have_posts() ) : ?>
+                
+                <div class="vc_row wpb_row vc_row-fluid vc_custom_1624257612150 mkdf-row-light-btt-skin mkdf-row-has-background-text"><div class="wpb_column vc_column_container vc_col-sm-12" style="z-index: 10;"><div class="vc_column-inner"><div class="wpb_wrapper"><div class="mkdf-elements-holder   mkdf-one-column  mkdf-responsive-mode-768 "><div class="mkdf-eh-item    " data-item-class="mkdf-eh-custom-7625" data-1367-1600="7% 0 0 22%" data-1025-1366="9.7% 0 0 8.1%" data-769-1024="7% 0 0 10%" data-681-768="7.8% 0 0 10%" data-680="7.5% 0 0 5%">
+	<div class="mkdf-eh-item-inner">
+		<div class="mkdf-eh-item-content mkdf-eh-custom-7625" style="padding: 4.3% 0 0 4.68%">
+			
+	<div class="wpb_text_column wpb_content_element  vc_custom_1624257597521">
+		<div class="wpb_wrapper">
+			<h1 style="text-transform:none;">Related articles</h1>
+
+		</div>
+	</div>
+		</div>
+	</div>
+</div></div></div></div></div><div class="mkdf-row-background-text-holder mkdf-row-background-text-front related-text"><div class="mkdf-row-background-text-wrapper mkdf-row-background-text-animation mkdf-row-background-text-align-left"><div class="mkdf-row-background-text-wrapper-inner" style="font-size:160px;color:#dedfe0;-webkit-text-stroke-color:#dedfe0;text-align:left;vertical-align:middle;" data-font-size-1440="160px" data-font-size-1280="160px" data-padding-left-size-1440="4.3%" data-padding-left-size-1280="4.3%"><div class="mkdf-row-background-text-1"><span class="mkdf-char-mask"><span>R</span></span><span class="mkdf-char-mask"><span>e</span></span><span class="mkdf-char-mask"><span>l</span></span><span class="mkdf-char-mask"><span>a</span></span><span class="mkdf-char-mask"><span>t</span></span><span class="mkdf-char-mask"><span>e</span></span><span class="mkdf-char-mask"><span>d</span></span> <span class="mkdf-char-mask"><span>a</span></span><span class="mkdf-char-mask"><span>r</span></span><span class="mkdf-char-mask"><span>t</span></span><span class="mkdf-char-mask"><span>i</span></span><span class="mkdf-char-mask"><span>c</span></span><span class="mkdf-char-mask"><span>l</span></span><span class="mkdf-char-mask"><span>e</span></span><span class="mkdf-char-mask"><span>s</span></span></div></div></div></div></div>
+                </div>
+
+                <div class="mkdf-related-posts-inner clearfix">
+                    <?php while ( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
+                        <div class="mkdf-related-post">
+                            
+                        <div class="mkdf-post-text-inner">
+                        <div class="mkdf-post-heading">
+            <?php wilmer_mikado_get_module_template_part('templates/parts/media', 'blog', $post_format, $part_params); ?>
+        </div>
+                <div class="mkdf-post-info-top">
+                    <?php wilmer_mikado_get_module_template_part('templates/parts/post-info/date', 'blog', '', $part_params); ?>
+                    <?php wilmer_mikado_get_module_template_part('templates/parts/post-info/category', 'blog', '', $part_params); ?>
+                </div>
+                <div class="mkdf-post-text-main">
+                   <h4> <?php if(wilmer_mikado_blog_item_has_link()) { ?>
+        <a itemprop="url" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+    <?php } ?>
+        <?php the_title(); ?>
+    <?php if(wilmer_mikado_blog_item_has_link()) { ?>
+        </a>
+    <?php } ?></h4>
+                    <?php wilmer_mikado_get_module_template_part('templates/parts/excerpt', 'blog', '', $part_params); ?>
+                    <?php do_action('wilmer_mikado_action_single_link_pages'); ?>
+                    <div class="mkdf-post-info-bottom-left">
+                            <?php wilmer_mikado_get_module_template_part('templates/parts/post-info/read-more', 'blog', '', $part_params); ?>
+                        </div>
+                    <div class="mkdf-post-info-bottom">
+                       
+                        <div class="mkdf-post-info-bottom-right">
+                            <?php wilmer_mikado_get_module_template_part('templates/parts/post-info/comments', 'blog', '', $part_params); ?>
+                            <?php wilmer_mikado_get_module_template_part('templates/parts/post-info/like', 'blog', '', $part_params); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            <?php endif;
+            wp_reset_postdata();
+            ?>
+        </div>
+    </div>
+<?php } ?>
